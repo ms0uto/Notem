@@ -1,0 +1,28 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : May 31, 2018, 8:34:45 PM
+    Author     : boo
+*/
+.jfx-anchor-pane:enabled{
+  -fx-text-fill: white;
+}
+
+   
+ /*#570076;*/
+ .scroll-bar:vertical {
+    -fx-scale-x: 0;
+    -fx-background-color: #3B076F;
+}
+ 
+.jfx-list-cell:filled{
+        -fx-font-size: 14pt;
+        -fx-background-color:  #3B076F;
+        -fx-text-fill: white;
+}
+.jfx-list-cell:selected{
+    -fx-background-color:  #190033;
+}
