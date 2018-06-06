@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gui.controllers;
+package controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import domain.entities.FeedMessage;
-import domain.entities.Parser;
+import domain.utils.Parser;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;

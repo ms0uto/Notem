@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gui.controllers;
+package controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import domain.entities.User;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -23,7 +24,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import testDB.SQLiteManager;
+import repository.SQLiteManager;
+import repository.services.UserServiceImpl;
 
 /**
  *
@@ -41,6 +43,7 @@ public class LoginViewController implements Initializable {
     private JFXButton exitbutton;
 
     private ResultSet resultset;
+    private UserServiceImpl userService;
 
     @FXML
     void exitApplication(ActionEvent event) {
@@ -69,29 +72,22 @@ public class LoginViewController implements Initializable {
         stage.setScene(signUpScene);
         stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
-
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        userService = new UserServiceImpl();
     }
 
     private boolean loginCheck() throws SQLException {
-        Connection con = SQLiteManager.getInstance().getConnection();
-
-        String loginCheckQuery = "SELECT id FROM user WHERE username ='" + username.getText() + "' AND password='" + password.getText() + "'";
-        resultset = con.createStatement().executeQuery(loginCheckQuery);
-        //Comprobamos si la query genera un resultado.
-        if (resultset.next()) {
-            int loginID = resultset.getInt("id");
-
-            System.out.print(loginID + "Session Started");
-            resultset.close();
+        User user = userService.findUserByName(username.getText(), password.getText());
+        if (user != null) {
+            System.out.print("Session Started");
             return true;
+        } else {
+            System.out.print("ERROR. User not exists.");
+            return false;
         }
-        return false;
-
     }
 
     private void loginError() {

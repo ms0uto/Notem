@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package repository;
+package repository.DAO;
 
 import domain.entities.FeedMessage;
 
@@ -11,8 +11,13 @@ import domain.entities.FeedMessage;
  *
  * @author EXTmsouto
  */
-public interface FeedMessageDao {
-    boolean insertMessage(FeedMessage feedmessage);
-    boolean deleteMessage(FeedMessage feedmessage);
+public class FeedMessageDao {
+//    public boolean insertMessage(FeedMessage feedmessage) {
+//        
+//    }
+//    
+//    public boolean deleteMessage(FeedMessage feedmessage) {
+//        
+//    }
     
 }

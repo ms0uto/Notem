@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package repository;
+package repository.DAO;
 
 import domain.entities.Feed;
 import domain.entities.User;
@@ -12,9 +12,8 @@ import domain.entities.User;
  *
  * @author EXTmsouto
  */
-public class FeedDaoImpl implements FeedDao {
+public class FeedDao {
 
-    @Override
     public boolean inserFeed(Feed feed, User user) {
         //query
         
@@ -22,7 +21,6 @@ public class FeedDaoImpl implements FeedDao {
         
     }
 
-    @Override
     public boolean deleteUser(Feed feed) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

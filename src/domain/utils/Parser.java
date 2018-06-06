@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package domain.entities;
+package domain.utils;
 
 /**
  *
  * @author EXTmsouto
  */
+import domain.entities.Feed;
+import domain.entities.FeedMessage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;

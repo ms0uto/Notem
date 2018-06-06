@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gui.controllers;
+package controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import domain.entities.User;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -18,8 +17,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.stage.Stage;
-import repository.UserDaoImpl;
-import testDB.SQLiteManager;
+import repository.SQLiteManager;
+import repository.services.UserServiceImpl;
 
 /**
  * FXML Controller class
@@ -37,9 +36,9 @@ public class SignUpViewController implements Initializable {
     @FXML
     private JFXTextField email;
 
-    UserDaoImpl userDaoImpl;
-
     private ResultSet resultset;
+    
+    private UserServiceImpl userService;
 
     /**
      * Initializes the controller class.
@@ -50,8 +49,7 @@ public class SignUpViewController implements Initializable {
     @FXML
     private void signIn(ActionEvent event) throws IOException, SQLException {
         if (!userExistsCheck() && !emailExistsCheck() ) {
-            userDaoImpl = new UserDaoImpl();
-            userDaoImpl.insertUser(User.createUserFactory(username.getText(), password.getText(), email.getText()));
+           userService.inserUser(username.getText(), password.getText(), email.getText());
             //if checks = false
             //Cambiamos de vista de nuevo tras crear el nuevo usuario.
             closeStage();
@@ -67,7 +65,7 @@ public class SignUpViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        userService = new UserServiceImpl();
     }
 
     private boolean userExistsCheck() throws SQLException {
