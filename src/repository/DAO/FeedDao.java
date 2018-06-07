@@ -14,7 +14,7 @@ import domain.entities.User;
  */
 public class FeedDao {
 
-    public boolean inserFeed(Feed feed, User user) {
+    public boolean insertFeed(Feed feed, User user) {
         //query
         
         return true;

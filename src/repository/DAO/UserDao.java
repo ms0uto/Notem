@@ -20,8 +20,25 @@ import repository.SQLiteManager;
  */
 public class UserDao {
 
-    public User findByID() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public User findByID(int id) { //TESTEAR
+        User user = null;
+        try {
+            Connection con = SQLiteManager.getInstance().getConnection();
+            String loginCheckQuery = "SELECT * FROM user WHERE id =" + id;
+            ResultSet resultset = con.createStatement().executeQuery(loginCheckQuery);
+            if (resultset.next()) {
+                user = User.createUserFactory(
+                        resultset.getString("username"),
+                        resultset.getString("password"),
+                        resultset.getString("email"));
+                resultset.close();
+                return user;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return user;
+
     }
 
     public void insertUser(User user) {

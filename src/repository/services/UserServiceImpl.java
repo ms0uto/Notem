@@ -16,7 +16,7 @@ import repository.DAO.UserDao;
 public class UserServiceImpl implements UserService {
     
     @Override
-    public void inserUser(String userName, String password, String email)  {
+    public void insertUser(String userName, String password, String email)  {
         UserDao userDao = new UserDao();
         userDao.insertUser(User.createUserFactory(userName, password, email));
     }

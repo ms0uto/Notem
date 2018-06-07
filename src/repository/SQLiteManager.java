@@ -51,18 +51,6 @@ public class SQLiteManager {
             
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS feed (id INTEGER PRIMARY KEY AUTOINCREMENT, title VARCHAR(64) NOT NULL, link VARCHAR(128) NOT NULL, description VARCHAR(128), user_id INTEGER, FOREIGN KEY(user_id) REFERENCES user(id))");
             
-//            statement.executeUpdate("insert into user values('leo','1234','wow@hotmail.com')");
-//            ResultSet resultSet = statement.executeQuery("select * from user");
-//            
-//            while (resultSet.next()){
-//                
-//            //read the result set
-//           
-//            System.out.println("name = " + resultSet.getString("name"));
-//            System.out.println("password = " + resultSet.getString("password"));
-//            System.out.println("email = " + resultSet.getString("email"));
-            
-         //}
             connection.close();
             
         } catch (SQLException ex) {

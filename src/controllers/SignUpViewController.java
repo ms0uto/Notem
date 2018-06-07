@@ -49,7 +49,7 @@ public class SignUpViewController implements Initializable {
     @FXML
     private void signIn(ActionEvent event) throws IOException, SQLException {
         if (!userExistsCheck() && !emailExistsCheck() ) {
-           userService.inserUser(username.getText(), password.getText(), email.getText());
+           userService.insertUser(username.getText(), password.getText(), email.getText());
             //if checks = false
             //Cambiamos de vista de nuevo tras crear el nuevo usuario.
             closeStage();

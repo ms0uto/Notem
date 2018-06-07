@@ -5,13 +5,17 @@
  */
 package domain.boundaries;
 
+import domain.entities.Feed;
 import domain.entities.User;
+import java.util.List;
 
 /**
  *
  * @author EXTmsouto
  */
-public interface UserService {
-    void insertUser(String userName, String password, String email);
-    User findUserByName(String username, String password);
+public interface FeedService {
+    void insertFeed(User user, String url);
+    List<Feed> getFeedsList(User user);
+    void deleteFeed(User user,String url);
+    
 }
