@@ -9,10 +9,9 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import domain.entities.User;
+import domain.utils.UserSessionManager;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -24,7 +23,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import repository.SQLiteManager;
 import repository.services.UserServiceImpl;
 
 /**
@@ -39,10 +37,7 @@ public class LoginViewController implements Initializable {
     private JFXTextField username;
     @FXML
     private JFXPasswordField password;
-    @FXML
-    private JFXButton exitbutton;
-
-    private ResultSet resultset;
+    
     private UserServiceImpl userService;
 
     @FXML
@@ -52,8 +47,8 @@ public class LoginViewController implements Initializable {
 
     @FXML
     private void login(ActionEvent event) throws IOException, SQLException {
-        if (loginCheck()) {
-            //Cambiamos de vista e iniciamos session?
+        if (validSession()) {
+            //Cambiamos de vista.            
             AnchorPane appPane = FXMLLoader.load(getClass().getResource("/gui/FXML/SessionView.fxml"));
             root.getChildren().setAll(appPane);
         } else {
@@ -79,19 +74,20 @@ public class LoginViewController implements Initializable {
         userService = new UserServiceImpl();
     }
 
-    private boolean loginCheck() throws SQLException {
+    private boolean validSession() throws SQLException {
         User user = userService.findUserByName(username.getText(), password.getText());
         if (user != null) {
-            System.out.print("Session Started");
+            UserSessionManager.sharedInstance().userLogin(user); //Inicia la sesión.
+            System.out.print("Session Started");//Cambiar para vista
             return true;
         } else {
-            System.out.print("ERROR. User not exists.");
+            System.out.print("ERROR. User not exists.");//Cambiar para vista.
             return false;
         }
     }
 
     private void loginError() {
-       System.out.print("Invalid Credentials");
+       System.out.print("Invalid Credentials");//Cambiar para vista.s
     }
 }
 
