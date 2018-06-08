@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class Feed {
 
-    public static Feed createFeedFactory(String title, String link, String description, String language, String copyright, String pubDate) {
+    public static Feed createFeedFactory(String title, String link, String description) {
         return new Feed(title, link, description);
     }
 

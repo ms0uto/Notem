@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
@@ -26,30 +28,35 @@ import javax.xml.stream.events.XMLEvent;
 public class Parser {
     static final String TITLE = "title";
     static final String DESCRIPTION = "description";
-    static final String CHANNEL = "channel";
-    static final String LANGUAGE = "language";
-    static final String COPYRIGHT = "copyright";
     static final String LINK = "link";
-    static final String AUTHOR = "author";
     static final String ITEM = "item";
-    static final String PUB_DATE = "pubDate";
-    static final String GUID = "guid";
+   
 
-    final URL url;
+    private URL url;
+    
+    private static Parser sharedInstance;
 
-    private Parser(String feedUrl) {
+    public static Parser sharedInstance() {
+        if (sharedInstance == null) {
+            sharedInstance = new Parser();
+        }
+        return sharedInstance;
+       
+    }
+    private Parser(){
+        url = null;
+    }
+   
+    public void setURL(String url){
+        
         try {
-            this.url = new URL(feedUrl);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
+            this.url = new URL(url);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(Parser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    //Static Factory Method (private constructor).
-    public static final Parser newInstance(String feedUrl) {
-        return new Parser(feedUrl);
-}
-
-   
+    
+    
     public Feed readFeed() {
         Feed feed = null;
         try {
@@ -58,11 +65,6 @@ public class Parser {
             String description = "";
             String title = "";
             String link = "";
-            String language = "";
-            String copyright = "";
-            String author = "";
-            String pubdate = "";
-            String guid = "";
 
             // First create a new XMLInputFactory
             XMLInputFactory inputFactory = XMLInputFactory.newInstance();
@@ -79,7 +81,7 @@ public class Parser {
                     case ITEM:
                         if (isFeedHeader) {
                             isFeedHeader = false;
-                            feed = Feed.createFeedFactory(title, link, description, language, copyright, pubdate);
+                            feed = Feed.createFeedFactory(title, link, description);
                         }
                         event = eventReader.nextEvent();
                         break;
@@ -92,28 +94,11 @@ public class Parser {
                     case LINK:
                         link = getCharacterData(event, eventReader);
                         break;
-                    case GUID:
-                        guid = getCharacterData(event, eventReader);
-                        break;
-                    case LANGUAGE:
-                        language = getCharacterData(event, eventReader);
-                        break;
-                    case AUTHOR:
-                        author = getCharacterData(event, eventReader);
-                        break;
-                    case PUB_DATE:
-                        pubdate = getCharacterData(event, eventReader);
-                        break;
-                    case COPYRIGHT:
-                        copyright = getCharacterData(event, eventReader);
-                        break;
                     }
                 } else if (event.isEndElement()) {
                     if (event.asEndElement().getName().getLocalPart() == (ITEM)) {
                         FeedMessage message = new FeedMessage();
-                        message.setAuthor(author);
                         message.setDescription(description);
-                        message.setGuid(guid);
                         message.setLink(link);
                         message.setTitle(title);
                         feed.getMessages().add(message);

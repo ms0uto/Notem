@@ -8,15 +8,12 @@ package controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
-import domain.entities.FeedMessage;
 import domain.utils.Parser;
+import domain.utils.UserSessionManager;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,6 +24,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import repository.services.FeedServiceImpl;
 
 /**
  * FXML Controller class
@@ -35,7 +33,6 @@ import javafx.stage.Stage;
  */
 public class SessionViewController implements Initializable {
 
-    private Parser parser;
     private ArrayList newsList;
     @FXML
     private JFXListView<String> listView;
@@ -44,6 +41,10 @@ public class SessionViewController implements Initializable {
     private JFXButton exitbutton;
     @FXML
     private JFXTextField addfeed;
+    
+    private FeedServiceImpl feedService;
+    
+    Parser parser;
 
     /**
      * Initializes the controller class.
@@ -70,15 +71,22 @@ public class SessionViewController implements Initializable {
     @FXML
     void addFeed(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
-            //test refactorizar..
-            parser = Parser.newInstance(addfeed.getText());
-            List<FeedMessage> messages = parser.readFeed().getMessages();
-            messages.stream().forEach((fm) -> {
-                newsList.add(fm.getTitle() + fm.getDescription());
-            });
-            //Convertimos a ObservableList y la rellenamos.
-            ObservableList<String> feedList = FXCollections.observableArrayList(newsList);
-            listView.setItems(feedList);
+            if (validURL()){
+            parser = Parser.sharedInstance();
+            parser.setURL(addfeed.getText());
+            feedService.insertFeed(UserSessionManager.sharedInstance().getLoggedUserID(), parser.readFeed()); //Insertamos el feed leído con el id de usuario logueado.
+            }
+            
+//test refactorizar..
+//            Parser parser = Parser.sharedInstance();
+//            parser.setURL(addfeed.getText());
+//            List<FeedMessage> messages = parser.readFeed().getMessages();
+//            messages.stream().forEach((fm) -> {
+//                newsList.add(fm.getTitle() + fm.getDescription());
+//            });
+//            //Convertimos a ObservableList y la rellenamos.
+//            ObservableList<String> feedList = FXCollections.observableArrayList(newsList);
+//            listView.setItems(feedList);
         }
     }
 
@@ -88,7 +96,9 @@ public class SessionViewController implements Initializable {
         //TEST EXTRAER
         //
         //Inicializamos ArrayList
+        feedService = new FeedServiceImpl();
         newsList = new ArrayList<>();
+        
 
         //Devolvemos un parser para URL concreta.
         //parser = Parser.newInstance("http://rss.cnn.com/rss/edition_europe.rss");
@@ -107,6 +117,10 @@ public class SessionViewController implements Initializable {
         //Rellenamos la OList.
         //listView.setItems(feedList);
 
+    }
+
+    private boolean validURL() {
+        return true;
     }
 
 }

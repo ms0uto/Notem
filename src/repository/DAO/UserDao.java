@@ -24,8 +24,8 @@ public class UserDao {
         User user = null;
         try {
             Connection con = SQLiteManager.getInstance().getConnection();
-            String loginCheckQuery = "SELECT * FROM user WHERE id =" + id;
-            ResultSet resultset = con.createStatement().executeQuery(loginCheckQuery);
+            String findByIDQuery = "SELECT * FROM user WHERE id =" + id;
+            ResultSet resultset = con.createStatement().executeQuery(findByIDQuery);
             if (resultset.next()) {
                 user = User.createUserFactory(
                         resultset.getString("username"),
@@ -54,15 +54,32 @@ public class UserDao {
         }
     }
 
+    public int getID(User user) {
+        int id= 0;
+        try {
+            Connection con = SQLiteManager.getInstance().getConnection();
+            String getIDQuery = "SELECT id FROM user WHERE username ='" + user.getName() +"'";
+            ResultSet resultset = con.createStatement().executeQuery(getIDQuery);
+            id = resultset.getInt("id");
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         return id;
+    }
+
     public User findUserByName(String username, String password) {
         User user = null;
         try {
             Connection con = SQLiteManager.getInstance().getConnection();
-            String loginCheckQuery = "SELECT id FROM user WHERE username ='" + username + "' AND password='" + password + "'";
-            ResultSet resultset = con.createStatement().executeQuery(loginCheckQuery);
+            String findUserByNameQuery = "SELECT * FROM user WHERE username ='" + username + "' AND password='" + password + "'";
+            ResultSet resultset = con.createStatement().executeQuery(findUserByNameQuery);
+
             if (resultset.next()) {
-                String email = resultset.getString("email");
-                user = User.createUserFactory(username, password, email);
+
+                user = User.createUserFactory(
+                        resultset.getString("username"),
+                        resultset.getString("password"),
+                        resultset.getString("email"));
                 resultset.close();
             }
         } catch (SQLException ex) {

@@ -6,12 +6,15 @@
 package domain.utils;
 
 import domain.entities.User;
+import repository.services.UserServiceImpl;
 
 /**
  *
  * @author EXTmsouto
  */
 public class UserSessionManager {
+    
+    UserServiceImpl userService;
     
     private static UserSessionManager sharedInstance;
     
@@ -41,5 +44,8 @@ public class UserSessionManager {
     }
     public User getUser(){
         return loggedUser;
+    }
+    public int getLoggedUserID(){
+        return userService.getID(loggedUser);
     }
 }

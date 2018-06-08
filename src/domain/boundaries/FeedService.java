@@ -6,7 +6,6 @@
 package domain.boundaries;
 
 import domain.entities.Feed;
-import domain.entities.User;
 import java.util.List;
 
 /**
@@ -14,8 +13,8 @@ import java.util.List;
  * @author EXTmsouto
  */
 public interface FeedService {
-    void insertFeed(User user, String url);
-    List<Feed> getFeedsList(User user);
-    void deleteFeed(User user,String url);
+    void insertFeed(int user_id, Feed feed);
+    List<Feed> getFeedList(int user_id);
+    void deleteFeed(int user_id,Feed feed);
     
 }

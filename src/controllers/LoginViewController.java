@@ -5,6 +5,7 @@
  */
 package controllers;
 
+
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import domain.entities.User;
