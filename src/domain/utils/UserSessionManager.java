@@ -39,4 +39,7 @@ public class UserSessionManager {
     public boolean isUserLogged() {
         return loggedUser != null;
     }
+    public User getUser(){
+        return loggedUser;
+    }
 }
