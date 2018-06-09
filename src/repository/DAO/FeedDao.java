@@ -24,10 +24,9 @@ public class FeedDao {
     public void insertFeed(int user_id, Feed feed) {
         try {
 
-            String insertFeedQuery = "insert into feed (title, link, description,user_id) values('" + feed.getTitle() + "', '" + feed.getLink() + "', '" + feed.getDescription() + "', '" + user_id + "')";
-            SQLiteManager sm = SQLiteManager.getInstance();
-            Connection connection = sm.getConnection();
-            Statement statement = connection.createStatement();
+            String insertFeedQuery = "insert into feed (title, link, description,user_id) values('" + feed.getTitle() + "', '" + feed.getLink() + "', '" + feed.getDescription() + "', " + user_id + ")";
+            Connection con = SQLiteManager.getInstance().getConnection();
+            Statement statement = con.createStatement();
             statement.executeUpdate(insertFeedQuery);
 
         } catch (SQLException ex) {
@@ -47,12 +46,14 @@ public class FeedDao {
                         resultset.getString("title"),
                         resultset.getString("link"),
                         resultset.getString("description")));
-
+                
             }
+           
 
         } catch (SQLException ex) {
             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         return feedList;
     }
 

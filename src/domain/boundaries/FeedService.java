@@ -17,4 +17,5 @@ public interface FeedService {
     List<Feed> getFeedList(int user_id);
     void deleteFeed(int user_id,Feed feed);
     
+    
 }

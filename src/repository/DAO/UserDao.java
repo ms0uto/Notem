@@ -61,6 +61,7 @@ public class UserDao {
             String getIDQuery = "SELECT id FROM user WHERE username ='" + user.getName() +"'";
             ResultSet resultset = con.createStatement().executeQuery(getIDQuery);
             id = resultset.getInt("id");
+            
         } catch (SQLException ex) {
             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
         }
