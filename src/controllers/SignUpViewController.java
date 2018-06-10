@@ -59,8 +59,9 @@ public class SignUpViewController implements Initializable {
                 //Cambiamos de vista de nuevo tras crear el nuevo usuario.
                 closeStage();
 
+            } else {
+                showEmailErrorDialog();
             }
-            showEmailErrorDialog();
 
         } else {
             showUserErrorDialog();

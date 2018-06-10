@@ -80,10 +80,8 @@ public class LoginViewController implements Initializable {
         User user = userService.findUserByName(username.getText(), password.getText());
         if (user != null) {
             UserSessionManager.sharedInstance().userLogin(user); //Inicia la sesión.
-            System.out.print("Session Started");//Cambiar para vista
             return true;
         } else {
-            System.out.print("ERROR. User not exists.");//Cambiar para vista.
             return false;
         }
     }

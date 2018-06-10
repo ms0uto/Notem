@@ -92,13 +92,11 @@ public class Parser {
                             break;
                         case LINK:
                             link = getCharacterData(event, eventReader);
-                            //TEST para terminal, quitar!
-                            System.out.println("Link:");
-                            System.out.println(link);
                             break;
+                            
                     }
                 } else if (event.isEndElement()) {
-                    if (event.asEndElement().getName().getLocalPart().equals(ITEM)) {
+                    if (event.asEndElement().getName().getLocalPart() == (ITEM)) {
                         FeedMessage message = new FeedMessage();
                         message.setDescription(description);
                         message.setLink(link);

@@ -10,7 +10,9 @@ and open the template in the editor.
 .jfx-anchor-pane:enabled{
   -fx-text-fill: white;
 }
-
+.text-input{
+    -fx-text-fill:white;
+}
    
  /*#570076;*/
  .scroll-bar:vertical {
