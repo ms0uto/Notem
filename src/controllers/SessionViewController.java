@@ -12,7 +12,10 @@ import domain.entities.Feed;
 import domain.entities.FeedMessage;
 import domain.utils.Parser;
 import domain.utils.UserSessionManager;
+import java.awt.Desktop;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,14 +68,18 @@ public class SessionViewController implements Initializable {
      * Initializes the controller class.
      *
      * @param arg0
+     * @throws IOException
+     * @throws URISyntaxException
+     *
      */
     @FXML
-    public void readInBrowser(MouseEvent arg0) {
+    public void readInBrowser(MouseEvent arg0) throws IOException, URISyntaxException {
 
-        //String url = listView.getSelectionModel().getSelectedItem();
-        //Desktop.browse((url));
-    }
-
+        int clickedCellIndex = listView.getSelectionModel().getSelectedIndex();
+        FeedMessage fm = allFeedsMessages.get(clickedCellIndex);
+        Desktop.getDesktop().browse(new URI(fm.getLink()));
+       
+   }
     @FXML
     void exitSession(ActionEvent event) throws IOException {
 
