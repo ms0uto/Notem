@@ -34,3 +34,6 @@ and open the template in the editor.
 .jfx-list-cell:selected{
     -fx-background-color:  #190033;
 }
+.jfx-list-cell:hover{
+    -fx-background-color:  #190033;
+}
