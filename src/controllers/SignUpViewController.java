@@ -16,7 +16,11 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.DialogPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import repository.SQLiteManager;
 import repository.services.UserServiceImpl;
 
@@ -37,7 +41,7 @@ public class SignUpViewController implements Initializable {
     private JFXTextField email;
 
     private ResultSet resultset;
-    
+
     private UserServiceImpl userService;
 
     /**
@@ -48,14 +52,19 @@ public class SignUpViewController implements Initializable {
      */
     @FXML
     private void signIn(ActionEvent event) throws IOException, SQLException {
-        if (!userExistsCheck() && !emailExistsCheck() ) {
-           userService.insertUser(username.getText(), password.getText(), email.getText());
-            //if checks = false
-            //Cambiamos de vista de nuevo tras crear el nuevo usuario.
-            closeStage();
+        if (!userExistsCheck()) {
+            if (!emailExistsCheck()) {
+                userService.insertUser(username.getText(), password.getText(), email.getText());
+                showConfirmationDialog();
+                //Cambiamos de vista de nuevo tras crear el nuevo usuario.
+                closeStage();
 
-        } // Else error ...
+            }
+            showEmailErrorDialog();
 
+        } else {
+            showUserErrorDialog();
+        }
     }
 
     @FXML
@@ -82,8 +91,7 @@ public class SignUpViewController implements Initializable {
         return false;
 
     }
-    
-    
+
     private boolean emailExistsCheck() throws SQLException {
 
         Connection con = SQLiteManager.getInstance().getConnection();
@@ -98,15 +106,46 @@ public class SignUpViewController implements Initializable {
         return false;
 
     }
-    
-    
-    
-    
-    
 
     public void closeStage() {
         Stage stage = (Stage) exitButton.getScene().getWindow(); //Devolvemos la Stage desde el botón ;)
         stage.close();
+    }
+
+    private void showConfirmationDialog() {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle(null);
+        alert.initStyle(StageStyle.UNDECORATED);
+        alert.setHeaderText("New user registered");
+
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource("/gui/sources/styles/Dialog.css").toExternalForm());
+
+        alert.showAndWait();
+    }
+
+    private void showUserErrorDialog() {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle(null);
+        alert.initStyle(StageStyle.UNDECORATED);
+        alert.setHeaderText("User already exists");
+
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource("/gui/sources/styles/Dialog.css").toExternalForm());
+
+        alert.showAndWait();
+    }
+
+    private void showEmailErrorDialog() {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle(null);
+        alert.initStyle(StageStyle.UNDECORATED);
+        alert.setHeaderText("Email already exists");
+
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource("/gui/sources/styles/Dialog.css").toExternalForm());
+
+        alert.showAndWait();
     }
 
 }

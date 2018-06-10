@@ -20,6 +20,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.DialogPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -87,7 +89,15 @@ public class LoginViewController implements Initializable {
     }
 
     private void loginError() {
-       System.out.print("Invalid Credentials");//Cambiar para vista.s
+       Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(null);
+        alert.initStyle(StageStyle.UNDECORATED);
+        alert.setHeaderText("Invalid credentials");
+
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource("/gui/sources/styles/Dialog.css").toExternalForm());
+
+        alert.showAndWait();
     }
 }
 

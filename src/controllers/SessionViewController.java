@@ -68,8 +68,7 @@ public class SessionViewController implements Initializable {
      */
     @FXML
     public void readInBrowser(MouseEvent arg0) {
-        //Supuestamente abrirá el elemento de la celda en el navegador predeterminado...
-        //URL? jejeje nope.
+
         //String url = listView.getSelectionModel().getSelectedItem();
         //Desktop.browse((url));
     }
@@ -82,6 +81,7 @@ public class SessionViewController implements Initializable {
         Scene LoginScene = new Scene(LoginPane);
         stage.setScene(LoginScene);
         stage.show();
+        service.shutdown();
 
     }
 
@@ -124,20 +124,18 @@ public class SessionViewController implements Initializable {
                 parser = Parser.sharedInstance();
 
                 userFeedList.forEach((Feed feed) -> {
-                    //TEST
-                    System.out.println(feed.toString());
-                    //ESTO hace falta pero da null pointer mientras las url no vuelvan.
-                    //parser.setURL(feed.getLink());
 
+                    //parser.setURL(feed.getLink());
                     // Leemos todos los mensajes del feed seteado.
                     List<FeedMessage> eachfeedMessages = parser.readFeed().getMessages();
-                    allFeedsMessages.addAll(eachfeedMessages);// <- Todos los objetos FeedMessage devueltos por la Lista de Feeds.
+                    //Todos los objetos FeedMessage devueltos por la Lista de Feeds.
+                    allFeedsMessages.addAll(eachfeedMessages);
 
                 });
 
                 ObservableList<String> AllMessagesObservable = FXCollections.observableArrayList(getAllFeedsMessagesStrings());
                 listView.setItems(AllMessagesObservable);
-                System.out.println("debug 4 hemos seteado vista ;(");
+
             }
         }
 
@@ -158,19 +156,5 @@ public class SessionViewController implements Initializable {
     }
 }
 
-
-// Antiguo, funciona, muestra desde url introducida NO desde url traída de base de datos.
-
-//Devolvemos un parser para URL concreta.
-//parser = Parser.newInstance("http://rss.cnn.com/rss/edition_europe.rss");
-//Creamos Lista de mensajes tras parsear un feed, y llamar getMessages sobre el mismo.
-//List<FeedMessage> messages = parser.readFeed().getMessages();
-// Java 8 mechanics.
-//messages.stream().forEach((fm) -> {
-//    newsList.add(fm.getTitle() + fm.getDescription());
-//});
-//Convertimos a ObservableList.
-//ObservableList<String> feedList = FXCollections.observableArrayList(newsList);
-//Rellenamos la OList.
-//listView.setItems(feedList);
+// TEST RSS = http://rss.cnn.com/rss/edition_europe.rss
 
