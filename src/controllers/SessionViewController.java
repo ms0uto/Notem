@@ -121,9 +121,7 @@ public class SessionViewController implements Initializable {
         return true;
     }
 
-    Runnable refreshRunnable = new Runnable() {
-        @Override
-        public void run() {
+    Runnable refreshRunnable =  () -> {
             allFeedsMessages = new ArrayList<>();
             List<Feed> userFeedList = feedService.getFeedList(UserSessionManager.sharedInstance().getLoggedUserID()); //devuelvo lista de FEED de usuario por id.
             if (!userFeedList.isEmpty()) {
@@ -144,8 +142,6 @@ public class SessionViewController implements Initializable {
                 listView.setItems(AllMessagesObservable);
 
             }
-        }
-
     };
 
     private void setUsername() {
