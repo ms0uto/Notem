@@ -24,16 +24,15 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.Characters;
 import javax.xml.stream.events.XMLEvent;
 
-
 public class Parser {
+
     static final String TITLE = "title";
     static final String DESCRIPTION = "description";
     static final String LINK = "link";
     static final String ITEM = "item";
-   
 
     private URL url;
-    
+
     private static Parser sharedInstance;
 
     public static Parser sharedInstance() {
@@ -41,22 +40,22 @@ public class Parser {
             sharedInstance = new Parser();
         }
         return sharedInstance;
-       
+
     }
-    private Parser(){
+
+    private Parser() {
         url = null;
     }
-   
-    public void setURL(String url){
-        
+
+    public void setURL(String url) {
+
         try {
             this.url = new URL(url);
         } catch (MalformedURLException ex) {
             Logger.getLogger(Parser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
+
     public Feed readFeed() {
         Feed feed = null;
         try {
@@ -78,31 +77,34 @@ public class Parser {
                     String localPart = event.asStartElement().getName()
                             .getLocalPart();
                     switch (localPart) {
-                    case ITEM:
-                        if (isFeedHeader) {
-                            isFeedHeader = false;
-                            feed = Feed.createFeedFactory(title, link, description);
-                        }
-                        event = eventReader.nextEvent();
-                        break;
-                    case TITLE:
-                        title = getCharacterData(event, eventReader);
-                        break;
-                    case DESCRIPTION:
-                        description = getCharacterData(event, eventReader);
-                        break;
-                    case LINK:
-                        link = getCharacterData(event, eventReader);
-                        break;
+                        case ITEM:
+                            if (isFeedHeader) {
+                                isFeedHeader = false;
+                                feed = Feed.createFeedFactory(title, link, description);
+                            }
+                            eventReader.nextEvent();
+                            break;
+                        case TITLE:
+                            title = getCharacterData(event, eventReader);
+                            break;
+                        case DESCRIPTION:
+                            description = getCharacterData(event, eventReader);
+                            break;
+                        case LINK:
+                            link = getCharacterData(event, eventReader);
+                            //TEST para terminal, quitar!
+                            System.out.println("Link:");
+                            System.out.println(link);
+                            break;
                     }
                 } else if (event.isEndElement()) {
-                    if (event.asEndElement().getName().getLocalPart() == (ITEM)) {
+                    if (event.asEndElement().getName().getLocalPart().equals(ITEM)) {
                         FeedMessage message = new FeedMessage();
                         message.setDescription(description);
                         message.setLink(link);
                         message.setTitle(title);
                         feed.getMessages().add(message);
-                        event = eventReader.nextEvent();
+                        eventReader.nextEvent();
                     }
                 }
             }

@@ -48,7 +48,7 @@ public class Feed {
 
     @Override
     public String toString() {
-        return (title + "\n" + " , " + description);
+        return (title + " , " + link + " , " + description);
     }
 
 }

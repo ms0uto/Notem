@@ -32,7 +32,7 @@ public class FeedServiceImpl implements FeedService {
 
     @Override
     public void deleteFeed(int user_id, Feed feed) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }
