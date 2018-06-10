@@ -19,12 +19,18 @@ and open the template in the editor.
     -fx-scale-x: 0;
     -fx-background-color: #3B076F;
 }
+.scroll-bar:horizontal {
+    -fx-scale-x: 0;
+    -fx-background-color: #3B076F;
+}
  
 .jfx-list-cell:filled{
         -fx-font-size: 14pt;
         -fx-background-color:  #3B076F;
         -fx-text-fill: white;
+        -fx-alignment: center;
 }
+
 .jfx-list-cell:selected{
     -fx-background-color:  #190033;
 }

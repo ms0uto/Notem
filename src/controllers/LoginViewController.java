@@ -5,7 +5,6 @@
  */
 package controllers;
 
-
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import domain.entities.User;
@@ -39,7 +38,7 @@ public class LoginViewController implements Initializable {
     private JFXTextField username;
     @FXML
     private JFXPasswordField password;
-    
+
     private UserServiceImpl userService;
 
     @FXML
@@ -55,9 +54,8 @@ public class LoginViewController implements Initializable {
             root.getChildren().setAll(appPane);
         } else {
             loginError();
-            
+
         }
-        //error login.
     }
 
     @FXML
@@ -87,7 +85,7 @@ public class LoginViewController implements Initializable {
     }
 
     private void loginError() {
-       Alert alert = new Alert(Alert.AlertType.ERROR);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(null);
         alert.initStyle(StageStyle.UNDECORATED);
         alert.setHeaderText("Invalid credentials");
@@ -98,4 +96,3 @@ public class LoginViewController implements Initializable {
         alert.showAndWait();
     }
 }
-

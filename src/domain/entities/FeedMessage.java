@@ -59,7 +59,7 @@ public class FeedMessage {
 
     @Override
     public String toString() {
-        return title + " || " + description;
+        return title;
     }
 
 }

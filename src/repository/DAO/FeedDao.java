@@ -59,8 +59,6 @@ public class FeedDao {
                         resultset.getString("title"),
                         resultset.getString("link"),
                         resultset.getString("description")));
-                // TEST QUITAR:
-                System.out.print(resultset.getString("link"));
             }
 
         } catch (SQLException ex) {
@@ -73,10 +71,6 @@ public class FeedDao {
             }
         }
         return feedList;
-    }
-
-    public boolean deleteUser(Feed feed) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }
