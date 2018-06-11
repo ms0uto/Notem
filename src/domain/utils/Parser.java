@@ -96,7 +96,7 @@ public class Parser {
                             
                     }
                 } else if (event.isEndElement()) {
-                    if (event.asEndElement().getName().getLocalPart() == (ITEM)) {
+                    if (event.asEndElement().getName().getLocalPart().equals(ITEM)) {
                         FeedMessage message = new FeedMessage();
                         message.setDescription(description);
                         message.setLink(link);

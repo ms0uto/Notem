@@ -14,10 +14,12 @@ import domain.utils.Parser;
 import domain.utils.UserSessionManager;
 import java.awt.Desktop;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
@@ -30,12 +32,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import repository.services.FeedServiceImpl;
 
 /**
@@ -95,13 +100,13 @@ public class SessionViewController implements Initializable {
     @FXML
     void addFeed(KeyEvent event) throws IOException {
         if (event.getCode() == KeyCode.ENTER) {
-            if (validURL()) {
+            if (validURL(addfeed.getText())) {
                 parser = Parser.sharedInstance();
                 parser.setURL(addfeed.getText());
                 System.out.println(addfeed.getText());
                 feedService.insertFeed(UserSessionManager.sharedInstance().getLoggedUserID(), parser.readFeed());
                 service.submit(refreshRunnable);
-            }
+            } else showURLErrorDialog();
         }
     }
 
@@ -117,8 +122,14 @@ public class SessionViewController implements Initializable {
 
     }
 
-    private boolean validURL() {
-        return true;
+    private boolean validURL(String stringURL) {
+        URL url;
+        try {
+            url = new URL(stringURL);
+            return true;
+        } catch (MalformedURLException ex) {
+        }
+        return false;
     }
 
     Runnable refreshRunnable =  () -> {
@@ -127,7 +138,6 @@ public class SessionViewController implements Initializable {
             if (!userFeedList.isEmpty()) {
 
                 parser = Parser.sharedInstance();
-
                 userFeedList.forEach((Feed feed) -> {
 
                     //parser.setURL(feed.getLink());
@@ -138,6 +148,7 @@ public class SessionViewController implements Initializable {
 
                 });
 
+                Collections.reverse(allFeedsMessages);
                 ObservableList<String> AllMessagesObservable = FXCollections.observableArrayList(getAllFeedsMessagesStrings());
                 listView.setItems(AllMessagesObservable);
 
@@ -156,6 +167,18 @@ public class SessionViewController implements Initializable {
 
         return resultList;
 
+    }
+
+    private void showURLErrorDialog() {
+       Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(null);
+        alert.initStyle(StageStyle.UNDECORATED);
+        alert.setHeaderText("URL is not valid");
+
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource("/gui/sources/styles/Dialog.css").toExternalForm());
+
+        alert.showAndWait();
     }
 }
 
