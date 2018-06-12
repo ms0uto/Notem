@@ -83,8 +83,9 @@ public class SessionViewController implements Initializable {
         int clickedCellIndex = listView.getSelectionModel().getSelectedIndex();
         FeedMessage fm = allFeedsMessages.get(clickedCellIndex);
         Desktop.getDesktop().browse(new URI(fm.getLink()));
-       
-   }
+
+    }
+
     @FXML
     void exitSession(ActionEvent event) throws IOException {
 
@@ -106,7 +107,9 @@ public class SessionViewController implements Initializable {
                 System.out.println(addfeed.getText());
                 feedService.insertFeed(UserSessionManager.sharedInstance().getLoggedUserID(), parser.readFeed());
                 service.submit(refreshRunnable);
-            } else showURLErrorDialog();
+            } else {
+                showURLErrorDialog();
+            }
         }
     }
 
@@ -132,27 +135,27 @@ public class SessionViewController implements Initializable {
         return false;
     }
 
-    Runnable refreshRunnable =  () -> {
-            allFeedsMessages = new ArrayList<>();
-            List<Feed> userFeedList = feedService.getFeedList(UserSessionManager.sharedInstance().getLoggedUserID()); //devuelvo lista de FEED de usuario por id.
-            if (!userFeedList.isEmpty()) {
+    Runnable refreshRunnable = () -> {
+        allFeedsMessages = new ArrayList<>();
+        List<Feed> userFeedList = feedService.getFeedList(UserSessionManager.sharedInstance().getLoggedUserID()); //devuelvo lista de FEED de usuario por id.
+        if (!userFeedList.isEmpty()) {
 
-                parser = Parser.sharedInstance();
-                userFeedList.forEach((Feed feed) -> {
+            parser = Parser.sharedInstance();
+            userFeedList.forEach((Feed feed) -> {
 
-                    //parser.setURL(feed.getLink());
-                    // Leemos todos los mensajes del feed seteado.
-                    List<FeedMessage> eachfeedMessages = parser.readFeed().getMessages();
-                    //Todos los objetos FeedMessage devueltos por la Lista de Feeds.
-                    allFeedsMessages.addAll(eachfeedMessages);
+                
+                // Leemos todos los mensajes del feed seteado.
+                List<FeedMessage> eachfeedMessages = parser.readFeed().getMessages();
+                //Todos los objetos FeedMessage devueltos por la Lista de Feeds.
+                allFeedsMessages.addAll(eachfeedMessages);
 
-                });
+            });
 
-                Collections.reverse(allFeedsMessages);
-                ObservableList<String> AllMessagesObservable = FXCollections.observableArrayList(getAllFeedsMessagesStrings());
-                listView.setItems(AllMessagesObservable);
+            Collections.reverse(allFeedsMessages);
+            ObservableList<String> AllMessagesObservable = FXCollections.observableArrayList(getAllFeedsMessagesStrings());
+            listView.setItems(AllMessagesObservable);
 
-            }
+        }
     };
 
     private void setUsername() {
@@ -170,7 +173,7 @@ public class SessionViewController implements Initializable {
     }
 
     private void showURLErrorDialog() {
-       Alert alert = new Alert(Alert.AlertType.ERROR);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(null);
         alert.initStyle(StageStyle.UNDECORATED);
         alert.setHeaderText("URL is not valid");
