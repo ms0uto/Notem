@@ -19,7 +19,7 @@
       </JFXButton>
       <Label fx:id="username" alignment="CENTER" contentDisplay="CENTER" layoutX="310.0" layoutY="19.0" prefHeight="40.0" prefWidth="130.0" text="Username" textAlignment="CENTER" textFill="WHITE">
          <font>
-            <Font size="16.0" />
+            <Font size="22.0" />
          </font>
          <effect>
             <Glow />
@@ -30,8 +30,8 @@
             <Image url="@../sources/images/userlogged.png" />
          </image>
       </ImageView>
-      <JFXListView fx:id="listView" fixedCellSize="40.0" layoutX="45.0" layoutY="138.0" onMouseClicked="#readInBrowser" prefHeight="340.0" prefWidth="630.0" style="-fx-background-color: #3B076F;" styleClass="jfx-list-cell" stylesheets="@../sources/styles/GeneralStyles.css" />
-      <JFXTextField fx:id="addfeed" alignment="CENTER" focusColor="#a661bf" layoutX="185.0" layoutY="85.0" onKeyPressed="#addFeed" prefHeight="30.0" prefWidth="380.0" promptText="www.example.rss" unFocusColor="WHITE">
+      <JFXListView fx:id="listView" fixedCellSize="40.0" layoutX="35.0" layoutY="131.0" onMouseClicked="#readInBrowser" prefHeight="340.0" prefWidth="660.0" style="-fx-background-color: #3B076F;" styleClass="jfx-list-cell" stylesheets="@../sources/styles/GeneralStyles.css" />
+      <JFXTextField fx:id="addfeed" alignment="CENTER" focusColor="#a661bf" layoutX="135.0" layoutY="86.0" onKeyPressed="#addFeed" prefHeight="30.0" prefWidth="450.0" promptText="www.example.rss" unFocusColor="WHITE">
          <font>
             <Font name="Consolas" size="16.0" />
          </font>
