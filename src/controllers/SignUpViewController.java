@@ -6,6 +6,7 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
@@ -36,7 +37,7 @@ public class SignUpViewController implements Initializable {
     @FXML
     private JFXTextField username;
     @FXML
-    private JFXTextField password;
+    private JFXPasswordField password;
     @FXML
     private JFXTextField email;
 
