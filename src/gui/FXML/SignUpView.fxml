@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -15,11 +16,6 @@
          </font>
       </JFXButton>
       <JFXTextField fx:id="username" layoutX="97.0" layoutY="136.0" promptText="Username">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </JFXTextField>
-      <JFXTextField fx:id="password" layoutX="97.0" layoutY="202.0" promptText="Password">
          <font>
             <Font size="14.0" />
          </font>
@@ -39,5 +35,10 @@
             <Image url="@../sources/images/usuario-small.png" />
          </image>
       </ImageView>
+      <JFXPasswordField fx:id="password" layoutX="97.0" layoutY="208.0" prefHeight="25.0" prefWidth="157.0" promptText="Password">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXPasswordField>
    </children>
 </AnchorPane>
